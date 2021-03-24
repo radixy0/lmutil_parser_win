@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Microsoft.Win32;
 using System.IO;
 
@@ -36,7 +37,7 @@ namespace lmutil_parser_win
             {
                 textBox_path.Text = "lmutil location unknown";
             }
-            textBox_args.Text = @"-s .\splm_ugslmd";
+            textBox_args.Text = "lmstat -c \" % SE_LICENSE_SERVER % \" -A";
         }
 
         private void button_chooseLog_Click(object sender, RoutedEventArgs e)
@@ -135,9 +136,9 @@ namespace lmutil_parser_win
             outStream.Close();
 
             //write to textbox from log
-            textBox_result.Text = "complete lmutil output can be found in log.txt \n";
+            textBox_result.Text = "complete lmutil output can be found in log.txt";
 
-            StreamReader inStream = new StreamReader("log.txt");
+            StreamReader inStream = new StreamReader("lmstat_A_only_in_Use.txt");
             String line;
             while((line=inStream.ReadLine()) != null)
             {
@@ -147,7 +148,26 @@ namespace lmutil_parser_win
 
         public String processLine(String input)
         {
-            return "\n"+input;
+            String output = "";
+
+            //pattern 1
+            String pattern = @"\bUsers of (\w+): .*";
+            MatchCollection matches = Regex.Matches(input, pattern);
+            if(matches.Count()>0)
+            {
+                output += "\n\n Users of: " + matches.First().Groups[1];
+                return output;
+            }
+
+            //pattern 2
+            pattern = @"\s*(\w+) (\w+) (\S|\.)* \(.*\) \(.*\)";
+            matches = Regex.Matches(input, pattern);
+            if (matches.Count() > 0)
+            {
+                output += "\n   User: " + matches.First().Groups[1] +" Machine: " + matches.First().Groups[2];
+            }
+
+            return output;
         }
 
         public void serializeLmutil(Lmutil_location toSerialize)
