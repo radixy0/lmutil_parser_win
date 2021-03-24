@@ -1,3 +1,3 @@
 # lmutil_parser_win
 
-Parser that extracts users from a lmutil log file, written in c#
+launches lmutil lmstat, and filters out the users of each module. written in c#
