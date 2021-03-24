@@ -25,12 +25,17 @@ namespace lmutil_parser_win
     /// </summary>
     public partial class MainWindow : Window
     {
-        String fileName = "aa";
+        String fileName = "";
         Lmutil_location lmutil_location;
         public MainWindow()
         {
             InitializeComponent();
+            textBox_result.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
             lmutil_location=deserializeLmutil();
+            if (lmutil_location == null)
+            {
+                textBox_path.Text = "lmutil location unknown";
+            }
             textBox_args.Text = @"-s .\splm_ugslmd";
         }
 
@@ -109,7 +114,7 @@ namespace lmutil_parser_win
             StreamWriter outStream = new StreamWriter("log.txt");
             Process process = new Process();
             process.StartInfo.FileName = "ipconfig";
-            process.StartInfo.Arguments = "/all";
+            process.StartInfo.Arguments = textBox_args.Text;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
             process.OutputDataReceived += new DataReceivedEventHandler((sender, e) =>
@@ -128,6 +133,21 @@ namespace lmutil_parser_win
             process.Close();
 
             outStream.Close();
+
+            //write to textbox from log
+            textBox_result.Text = "complete lmutil output can be found in log.txt \n";
+
+            StreamReader inStream = new StreamReader("log.txt");
+            String line;
+            while((line=inStream.ReadLine()) != null)
+            {
+                textBox_result.AppendText(processLine(line));
+            }
+        }
+
+        public String processLine(String input)
+        {
+            return "\n"+input;
         }
 
         public void serializeLmutil(Lmutil_location toSerialize)
