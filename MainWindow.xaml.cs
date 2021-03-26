@@ -39,6 +39,7 @@ namespace lmutil_parser_win
             }
             textBox_args.Text = "lmstat -c \" % SE_LICENSE_SERVER % \" -A";
             textBox_path.IsReadOnly = true;
+            textBox_result.IsReadOnly = true;
         }
 
         private void button_chooseLog_Click(object sender, RoutedEventArgs e)
@@ -150,7 +151,7 @@ namespace lmutil_parser_win
         public String processLine(String input)
         {
             String output = "";
-            //return input; -- DEBUG
+            //return input; //-- DEBUG
             //pattern 1
             String pattern = @"\bUsers of (\w+): .*";
             MatchCollection matches = Regex.Matches(input, pattern);
