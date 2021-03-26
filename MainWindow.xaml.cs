@@ -38,6 +38,7 @@ namespace lmutil_parser_win
                 textBox_path.Text = "lmutil location unknown";
             }
             textBox_args.Text = "lmstat -c \" % SE_LICENSE_SERVER % \" -A";
+            textBox_path.IsReadOnly = true;
         }
 
         private void button_chooseLog_Click(object sender, RoutedEventArgs e)
@@ -114,7 +115,7 @@ namespace lmutil_parser_win
             //parse args
             StreamWriter outStream = new StreamWriter("log.txt");
             Process process = new Process();
-            process.StartInfo.FileName = "ipconfig";
+            process.StartInfo.FileName = lmutil_location.Location;
             process.StartInfo.Arguments = textBox_args.Text;
             process.StartInfo.UseShellExecute = false;
             process.StartInfo.RedirectStandardOutput = true;
@@ -138,7 +139,7 @@ namespace lmutil_parser_win
             //write to textbox from log
             textBox_result.Text = "complete lmutil output can be found in log.txt";
 
-            StreamReader inStream = new StreamReader("lmstat_A_only_in_Use.txt");
+            StreamReader inStream = new StreamReader("log.txt");
             String line;
             while((line=inStream.ReadLine()) != null)
             {
@@ -149,7 +150,7 @@ namespace lmutil_parser_win
         public String processLine(String input)
         {
             String output = "";
-
+            //return input; -- DEBUG
             //pattern 1
             String pattern = @"\bUsers of (\w+): .*";
             MatchCollection matches = Regex.Matches(input, pattern);

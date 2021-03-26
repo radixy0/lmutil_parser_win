@@ -11,7 +11,7 @@
         <TextBox x:Name="textBox_path" HorizontalAlignment="Stretch" Margin="30,29,30,30" Text="Location of lmutil" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBox_args" HorizontalAlignment="Stretch" Margin="30,108,30,0" Text="arguments" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox x:Name="textBox_result" Margin="30,187,30,30" Text="result" TextWrapping="Wrap"/>
-        <Button x:Name="button_launch" Click="button_launch_Click" ClickMode="Release" Content="Read" HorizontalAlignment="Left" Margin="30,148,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button_launch" Click="button_launch_Click" ClickMode="Release" Content="Launch" HorizontalAlignment="Left" Margin="30,148,0,0" VerticalAlignment="Top"/>
         <Button Content="reset lmutil location" Click="button_reset_Click" ClickMode="Release" HorizontalAlignment="Right" Margin="0,66,30,0" VerticalAlignment="Top" Width="123"/>
 
     </Grid>
