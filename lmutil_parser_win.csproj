@@ -5,10 +5,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <AssemblyName>lmutil_reader</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>henlo.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>false</Optimize>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ILCompile" Version="1.0.5" />
+  </ItemGroup>
 
 </Project>
